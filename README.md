@@ -1,13 +1,26 @@
-# Sample Hardhat Project
+# Basic DeFi Yield Farming
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a Hardhat Ignition module that deploys that contract.
+## Descripción
 
-Try running some of the following tasks:
+Este proyecto implementa una plataforma DeFi de yield farming que permite a los usuarios realizar staking de tokens LP para obtener recompensas en forma de tokens DAPP.
 
-```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat ignition deploy ./ignition/modules/Lock.ts
-```
+## Funcionalidades
+
+- Stake de tokens LP.
+- Recolección de recompensas en tokens DAPP.
+- Retiro de tokens LP.
+- Distribución proporcional de recompensas a todos los stakers.
+
+## Contratos
+
+- **DappToken**: Contrato ERC-20 para recompensas.
+- **LPToken**: Contrato ERC-20 para staking.
+- **TokenFarm**: Contrato principal que gestiona el staking y las recompensas.
+
+## Instalación
+
+1. Clona este repositorio:
+   ```bash
+   git clone https://github.com/<tu-usuario>/Basic-DeFi-Yield-Farming.git
+   cd Basic-DeFi-Yield-Farming
+   ```
