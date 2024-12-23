@@ -108,6 +108,8 @@ contract TokenFarm {
         uint256 netRewards = rewards - fee;
 
         user.pendingRewards = 0;
+
+        // Transfiere las recompensas al usuario y comision al propietario
         dappToken.mint(msg.sender, netRewards);
         dappToken.mint(owner, fee);
 
@@ -120,23 +122,29 @@ contract TokenFarm {
      */
     function distributeRewardsAll() external onlyOwner {
         for (uint256 i = 0; i < stakers.length; i++) {
-            distributeRewards(stakers[i]);
+            address userAddress = stakers[i];
+            distributeRewards(userAddress);
         }
     }
 
     /**
      * @notice Calcula recompensas proporcionales para un usuario.
      * @param user Dirección del usuario.
+     * @dev La función distribuye recompensas basadas en la participación del usuario en el staking total.
      */
     function distributeRewards(address user) private {
         StakingInfo storage stakingUser = stakingInfo[user];
         uint256 blocksPassed = block.number - stakingUser.checkpoint;
 
+        // Verificar si hay bloques transcurridos y staking activo
         if (blocksPassed > 0 && totalStakingBalance > 0) {
+            // Calcular participación proporcional y recompensas acumuladas
             uint256 userShare = (stakingUser.stakingBalance * 1e18) /
                 totalStakingBalance;
             uint256 rewards = (REWARD_PER_BLOCK * blocksPassed * userShare) /
                 1e18;
+
+            // Actualizar recompensas pendientes y el checkpoint
             stakingUser.pendingRewards += rewards;
             stakingUser.checkpoint = block.number;
 
